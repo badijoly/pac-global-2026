@@ -362,29 +362,29 @@
             </div>
           </div>
 
-          <!-- CARD 3: AVANCE PROMEDIO NETO (DELTA) -->
+          <!-- CARD 3: EVALUACIONES DE LÍDERES DOCENTES -->
           <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition duration-200 flex flex-col justify-between relative overflow-hidden group">
             <div class="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-blue-500 to-indigo-500"></div>
             <div>
               <div class="flex items-center justify-between text-slate-500 text-xs font-bold uppercase tracking-wider">
-                <span>Avance Promedio Neto</span>
+                <span>Líderes de Equipo Evaluados</span>
                 <div class="p-2 rounded-xl bg-blue-50 text-blue-600 group-hover:scale-110 transition">
-                  <i data-lucide="arrow-up-right" class="w-4 h-4"></i>
+                  <i data-lucide="users" class="w-4 h-4"></i>
                 </div>
               </div>
               <div class="mt-3 flex items-baseline gap-2">
-                <span id="kpi-delta-pct" class="text-3xl font-black font-display text-blue-600">+15.3%</span>
+                <span id="kpi-docentes-evals" class="text-3xl font-black font-display text-blue-600">47</span>
                 <span class="text-xs font-semibold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-100">
-                  Δ Neto
+                  Evals Líderes
                 </span>
               </div>
               <p class="mt-2 text-xs text-slate-500">
-                Incremento porcentual absoluto entre la evaluación inicial (PRE) y la final (POST).
+                Evaluaciones pareadas de <strong class="text-slate-700">26 profesores líderes</strong> integrados en ambas líneas pedagógicas.
               </p>
             </div>
             <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-500">
-              <span>Crecimiento de conocimiento</span>
-              <span class="font-semibold text-blue-600">Evolución Positiva</span>
+              <span>Línea Verde: <strong class="text-emerald-700">15 evals</strong></span>
+              <span>Línea Azul: <strong class="text-sky-700">32 evals</strong></span>
             </div>
           </div>
 
@@ -487,7 +487,6 @@
                 <div class="mt-2 space-y-1 text-slate-600 text-[11px]">
                   <div class="flex justify-between"><span>Línea Base:</span> <strong id="gender-f-pre" class="text-slate-800">56.2%</strong></div>
                   <div class="flex justify-between"><span>Nivel POST:</span> <strong id="gender-f-post" class="text-pink-700">71.8%</strong></div>
-                  <div class="flex justify-between"><span>Δ Avance:</span> <strong id="gender-f-delta" class="text-emerald-700">+15.6%</strong></div>
                   <div class="flex justify-between"><span>Hake (g):</span> <strong id="gender-f-hake" class="text-purple-700">0.36</strong></div>
                   <div class="flex justify-between"><span>Tasa Fav.:</span> <strong id="gender-f-fav" class="text-emerald-700">86.8%</strong></div>
                 </div>
@@ -501,7 +500,6 @@
                 <div class="mt-2 space-y-1 text-slate-600 text-[11px]">
                   <div class="flex justify-between"><span>Línea Base:</span> <strong id="gender-m-pre" class="text-slate-800">55.2%</strong></div>
                   <div class="flex justify-between"><span>Nivel POST:</span> <strong id="gender-m-post" class="text-blue-700">70.0%</strong></div>
-                  <div class="flex justify-between"><span>Δ Avance:</span> <strong id="gender-m-delta" class="text-emerald-700">+14.8%</strong></div>
                   <div class="flex justify-between"><span>Hake (g):</span> <strong id="gender-m-hake" class="text-purple-700">0.33</strong></div>
                   <div class="flex justify-between"><span>Tasa Fav.:</span> <strong id="gender-m-fav" class="text-emerald-700">84.1%</strong></div>
                 </div>
@@ -619,7 +617,6 @@
                 <th scope="col" class="py-3 px-2 text-center text-slate-900 bg-slate-100 font-black" title="Sumatoria total de evaluaciones pareadas">Total Evals</th>
                 <th scope="col" class="py-3 px-3 text-right">PRE (%)</th>
                 <th scope="col" class="py-3 px-3 text-right">POST (%)</th>
-                <th scope="col" class="py-3 px-3 text-right">Δ Avance</th>
                 <th scope="col" class="py-3 px-3 text-center">Tasa Favorable</th>
                 <th scope="col" class="py-3 px-3 text-center">Ganancia Hake (g)</th>
               </tr>
@@ -645,11 +642,11 @@
               </p>
             </div>
 
-            <!-- Nota 2: Evaluación de Profesores Líderes -->
+            <!-- Nota 2: Evaluaciones de Profesores Líderes Integradas -->
             <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
-              <span class="font-bold text-slate-900 block mb-1">2. Evaluaciones de Profesores Líderes</span>
+              <span class="font-bold text-slate-900 block mb-1">2. Evaluaciones de Profesores Líderes Integradas</span>
               <p class="text-[11.5px] text-slate-600">
-                En la <strong>Línea Verde</strong>, los profesores líderes de equipo también completaron los instrumentos formativos en terreno (sumando 15 evaluaciones docentes en total). En la <strong>Línea Azul</strong>, los instrumentos de preguntas cerradas se aplicaron exclusivamente a los estudiantes (132 evaluaciones).
+                Tanto en la <strong>Línea Verde</strong> (15 evaluaciones de líderes en terreno) como en la <strong>Línea Azul</strong> (32 evaluaciones correspondientes a los 2 docentes líderes por establecimiento en ambos hitos), las evaluaciones de líderes se encuentran plenamente integradas en la base de datos (47 evaluaciones de líderes en total), permitiendo segmentar el análisis por rol según necesidad.
               </p>
             </div>
 
@@ -697,7 +694,7 @@
           </div>
           <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl badge-azul text-xs font-bold">
             <span class="w-3 h-3 rounded-full bg-sky-600"></span>
-            Línea Azul (8 Colegios · 132 Evals)
+            Línea Azul (8 Colegios · 164 Evals)
           </div>
         </div>
       </div>
@@ -720,7 +717,7 @@
             </p>
           </div>
 
-          <div class="grid grid-cols-4 gap-2 mt-5 text-center">
+          <div class="grid grid-cols-3 gap-3 mt-5 text-center">
             <div class="bg-white rounded-xl p-2.5 border border-emerald-100 shadow-xs">
               <div class="text-[10px] text-slate-500 uppercase font-bold">PRE Base</div>
               <div class="text-lg font-black font-display text-slate-800">65.5%</div>
@@ -728,10 +725,6 @@
             <div class="bg-white rounded-xl p-2.5 border border-emerald-100 shadow-xs">
               <div class="text-[10px] text-slate-500 uppercase font-bold">POST Final</div>
               <div class="text-lg font-black font-display text-emerald-700">74.2%</div>
-            </div>
-            <div class="bg-white rounded-xl p-2.5 border border-emerald-100 shadow-xs">
-              <div class="text-[10px] text-slate-500 uppercase font-bold">Δ Avance</div>
-              <div class="text-lg font-black font-display text-emerald-600">+8.7%</div>
             </div>
             <div class="bg-white rounded-xl p-2.5 border border-emerald-100 shadow-xs">
               <div class="text-[10px] text-slate-500 uppercase font-bold">Hake (g)</div>
@@ -755,7 +748,7 @@
             </p>
           </div>
 
-          <div class="grid grid-cols-4 gap-2 mt-5 text-center">
+          <div class="grid grid-cols-3 gap-3 mt-5 text-center">
             <div class="bg-white rounded-xl p-2.5 border border-sky-100 shadow-xs">
               <div class="text-[10px] text-slate-500 uppercase font-bold">PRE Base</div>
               <div class="text-lg font-black font-display text-slate-800">50.0%</div>
@@ -763,10 +756,6 @@
             <div class="bg-white rounded-xl p-2.5 border border-sky-100 shadow-xs">
               <div class="text-[10px] text-slate-500 uppercase font-bold">POST Final</div>
               <div class="text-lg font-black font-display text-sky-700">73.7%</div>
-            </div>
-            <div class="bg-white rounded-xl p-2.5 border border-sky-100 shadow-xs">
-              <div class="text-[10px] text-slate-500 uppercase font-bold">Δ Avance</div>
-              <div class="text-lg font-black font-display text-sky-600">+23.7%</div>
             </div>
             <div class="bg-white rounded-xl p-2.5 border border-sky-100 shadow-xs">
               <div class="text-[10px] text-slate-500 uppercase font-bold">Hake (g)</div>
@@ -986,6 +975,6 @@
   </div><!-- /#dashboard-app -->
 
   <!-- JAVASCRIPT LOGIC -->
-  <script src="app.js?v=20261120_auth"></script>
+  <script src="app.js?v=20261121_v4"></script>
 </body>
 </html>

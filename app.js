@@ -87,8 +87,10 @@ const elKpiMejoraronN = document.getElementById('kpi-mejoraron-n');
 const elKpiMantuvieronN = document.getElementById('kpi-mantuvieron-n');
 const elKpiRetrocedieronN = document.getElementById('kpi-retrocedieron-n');
 const elKpiPostPct = document.getElementById('kpi-post-pct');
+const elKpiPostPctMain = document.getElementById('kpi-post-pct-main');
 const elKpiPrePct = document.getElementById('kpi-pre-pct');
 const elKpiDeltaPct = document.getElementById('kpi-delta-pct');
+const elKpiDocentesEvals = document.getElementById('kpi-docentes-evals');
 const elKpiHakeG = document.getElementById('kpi-hake-g');
 const elKpiHakeTier = document.getElementById('kpi-hake-tier');
 
@@ -257,10 +259,13 @@ function updateDashboard() {
   safeSetText(elKpiRetrocedieronN, retrocedieronCount);
 
   safeSetText(elKpiPostPct, `${postMean.toFixed(1)}%`);
+  safeSetText(elKpiPostPctMain, `${postMean.toFixed(1)}%`);
   safeSetText(elKpiPrePct, `${preMean.toFixed(1)}%`);
 
   const sign = deltaMean >= 0 ? '+' : '';
   safeSetText(elKpiDeltaPct, `${sign}${deltaMean.toFixed(1)}%`);
+  const docCount = filtered.filter(e => (e.role || '').toLowerCase().includes('docente') || (e.role || '').toLowerCase().includes('lider')).length;
+  safeSetText(elKpiDocentesEvals, docCount);
 
   const hakeFormatted = hakeGlobal.toFixed(2);
   safeSetText(elKpiHakeG, hakeFormatted);
@@ -406,7 +411,7 @@ function renderSchoolsChart(filtered) {
               return [
                 `Línea: ${s.line}`,
                 `N° Evaluaciones: ${s.count}`,
-                `Δ Avance Neto: ${sign}${s.delta}%`,
+                
                 `Ganancia de Hake (g): ${s.hake}`
               ];
             },
@@ -580,7 +585,7 @@ function renderSchoolsTable() {
   schoolsList.sort((a, b) => b.post - a.post);
 
   if (schoolsList.length === 0) {
-    elTableBody.innerHTML = `<tr><td colspan="10" class="text-center py-6 text-slate-400">No se encontraron establecimientos coincidentes.</td></tr>`;
+    elTableBody.innerHTML = `<tr><td colspan="9" class="text-center py-6 text-slate-400">No se encontraron establecimientos coincidentes.</td></tr>`;
     return;
   }
 
@@ -616,7 +621,6 @@ function renderSchoolsTable() {
         <td class="py-3 px-2 text-center font-black text-slate-900 bg-slate-100/70 font-mono">${s.n}</td>
         <td class="py-3 px-3 text-right font-mono text-slate-600">${s.pre}%</td>
         <td class="py-3 px-3 text-right font-mono font-bold text-slate-900">${s.post}%</td>
-        <td class="py-3 px-3 text-right font-mono ${deltaClass}">${deltaSign}${s.delta}%</td>
         <td class="py-3 px-3 text-center">
           <span class="inline-flex items-center gap-1 font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full text-[11px]">
             ${s.favRate}%
@@ -679,9 +683,9 @@ function renderComparativeCharts() {
             afterBody: (items) => {
               const idx = items[0].dataIndex;
               if (idx === 0) {
-                return [`Δ Avance: +${h3.verde.delta_pct}%`, `Ganancia Hake (g): ${h3.verde.hake_g}`, `Muestra: N=${h3.verde.n_pares} pares`];
+                return [`Ganancia Hake (g): ${h3.verde.hake_g}`, `Muestra: N=${h3.verde.n_pares} pares`];
               } else {
-                return [`Δ Avance: +${h3.azul.delta_pct}%`, `Ganancia Hake (g): ${h3.azul.hake_g}`, `Muestra: N=${h3.azul.n_pares} pares`];
+                return [`Ganancia Hake (g): ${h3.azul.hake_g}`, `Muestra: N=${h3.azul.n_pares} pares`];
               }
             },
             label: (item) => `${item.dataset.label}: ${item.raw}%`
@@ -739,9 +743,9 @@ function renderComparativeCharts() {
             afterBody: (items) => {
               const idx = items[0].dataIndex;
               if (idx === 0) {
-                return [`Δ Avance: +${h4.verde.delta_pct}%`, `Ganancia Hake (g): ${h4.verde.hake_g}`, `Muestra: N=${h4.verde.n_pares} pares`];
+                return [`Ganancia Hake (g): ${h4.verde.hake_g}`, `Muestra: N=${h4.verde.n_pares} pares`];
               } else {
-                return [`Δ Avance: +${h4.azul.delta_pct}%`, `Ganancia Hake (g): ${h4.azul.hake_g}`, `Muestra: N=${h4.azul.n_pares} pares`];
+                return [`Ganancia Hake (g): ${h4.azul.hake_g}`, `Muestra: N=${h4.azul.n_pares} pares`];
               }
             },
             label: (item) => `${item.dataset.label}: ${item.raw}%`
