@@ -1,6 +1,62 @@
 // Programa Acción Climática 2026 - Dashboard Global & Comparativo
 // Badijoly / Antigravity
 
+// -----------------------------------------------------------------
+// AUTHENTICATION & ACCESS CONTROL (PASSWORD: pac2026)
+// -----------------------------------------------------------------
+window.handleAuthSubmit = function(event) {
+  if (event) event.preventDefault();
+  const input = document.getElementById('auth-password');
+  const error = document.getElementById('auth-error');
+  const gate = document.getElementById('auth-gate');
+  const app = document.getElementById('dashboard-app');
+
+  if (!input) return;
+  const val = input.value.trim();
+
+  if (val === 'pac2026') {
+    sessionStorage.setItem('pac_auth_token', 'authenticated');
+    document.documentElement.classList.add('pac-authed');
+    if (gate) {
+      gate.classList.add('transition-opacity', 'duration-300', 'opacity-0');
+      setTimeout(() => {
+        gate.style.display = 'none';
+        if (app) {
+          app.classList.remove('hidden');
+          app.style.display = 'flex';
+        }
+        if (window.lucide) lucide.createIcons();
+        if (typeof updateDashboard === 'function') updateDashboard();
+      }, 250);
+    }
+  } else {
+    if (error) error.classList.remove('hidden');
+    input.classList.add('border-rose-400', 'bg-rose-50');
+    input.value = '';
+    input.focus();
+  }
+};
+
+window.togglePasswordVisibility = function() {
+  const input = document.getElementById('auth-password');
+  const icon = document.getElementById('auth-eye-icon');
+  if (!input) return;
+  if (input.type === 'password') {
+    input.type = 'text';
+    if (icon) icon.setAttribute('data-lucide', 'eye-off');
+  } else {
+    input.type = 'password';
+    if (icon) icon.setAttribute('data-lucide', 'eye');
+  }
+  if (window.lucide) lucide.createIcons();
+};
+
+window.lockDashboard = function() {
+  sessionStorage.removeItem('pac_auth_token');
+  document.documentElement.classList.remove('pac-authed');
+  location.reload();
+};
+
 let rawData = null;
 let allEvaluaciones = [];
 let chartSchools = null;

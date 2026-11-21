@@ -75,11 +75,86 @@
       background-color: rgba(241, 245, 249, 0.6);
     }
   </style>
-</head>
-<body class="min-h-full flex flex-col text-slate-800 antialiased selection:bg-teal-500 selection:text-white">
 
-  <!-- TOP HEADER / NAV -->
-  <header class="gradient-hero text-white shadow-xl relative overflow-hidden">
+  <!-- FAST AUTH CHECK SCRIPT -->
+  <script>
+    (function() {
+      if (sessionStorage.getItem('pac_auth_token') === 'authenticated') {
+        document.documentElement.classList.add('pac-authed');
+      }
+    })();
+  </script>
+  <style>
+    .pac-authed #auth-gate { display: none !important; }
+    .pac-authed #dashboard-app { display: flex !important; }
+  </style>
+</head>
+<body class="min-h-full flex flex-col bg-slate-900 text-slate-800 antialiased selection:bg-teal-500 selection:text-white">
+
+  <!-- AUTH / PASSWORD GATE OVERLAY -->
+  <div id="auth-gate" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/95 backdrop-blur-lg p-4">
+    <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl border border-slate-200 p-7 sm:p-8 text-center relative overflow-hidden">
+      <!-- Decorative top gradient bar -->
+      <div class="absolute top-0 left-0 right-0 h-2 bg-gradient-to-r from-teal-500 via-emerald-500 to-sky-500"></div>
+      
+      <div class="mx-auto w-14 h-14 rounded-2xl bg-teal-50 border border-teal-200 text-teal-600 flex items-center justify-center mb-4 shadow-inner">
+        <i data-lucide="lock" class="w-7 h-7"></i>
+      </div>
+
+      <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-[11px] font-bold uppercase tracking-wider mb-2">
+        <span>Acceso Restringido</span>
+      </div>
+
+      <h2 class="text-2xl font-black font-display text-slate-900 tracking-tight">Programa Acción Climática</h2>
+      <p class="text-xs text-slate-500 mt-1 mb-6">
+        Consolidado de Impacto Cuantitativo 2026.<br>Ingrese la contraseña para visualizar el panel de resultados.
+      </p>
+
+      <form id="auth-form" onsubmit="handleAuthSubmit(event)" class="space-y-4">
+        <div class="relative">
+          <input 
+            type="password" 
+            id="auth-password" 
+            autocomplete="current-password"
+            placeholder="Ingrese contraseña..." 
+            class="w-full bg-slate-50 border border-slate-300 rounded-2xl py-3.5 pl-4 pr-11 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-teal-500 transition shadow-xs text-center font-semibold"
+            required
+            autofocus
+          >
+          <button 
+            type="button" 
+            onclick="togglePasswordVisibility()" 
+            class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition"
+            title="Mostrar u ocultar contraseña"
+          >
+            <i id="auth-eye-icon" data-lucide="eye" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <div id="auth-error" class="hidden text-xs font-semibold text-rose-600 bg-rose-50 border border-rose-200 rounded-xl py-2 px-3">
+          Contraseña incorrecta. Por favor intente nuevamente.
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full py-3.5 px-4 bg-teal-600 hover:bg-teal-700 active:scale-[0.99] text-white font-bold text-sm rounded-2xl shadow-md hover:shadow-lg transition duration-150 flex items-center justify-center gap-2 cursor-pointer"
+        >
+          <i data-lucide="log-in" class="w-4 h-4"></i>
+          Ingresar al Dashboard
+        </button>
+      </form>
+
+      <div class="mt-6 pt-4 border-t border-slate-100 text-[11px] text-slate-400">
+        Región de Antofagasta · Línea Verde & Línea Azul
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN DASHBOARD WRAPPER -->
+  <div id="dashboard-app" class="hidden min-h-screen flex flex-col bg-slate-50">
+
+    <!-- TOP HEADER / NAV -->
+    <header class="gradient-hero text-white shadow-xl relative overflow-hidden">
     <!-- Subtle background pattern decoration -->
     <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none"></div>
 
@@ -116,6 +191,11 @@
             <div class="text-2xl font-bold font-display text-emerald-300" id="pill-hake-g">0.35</div>
             <div class="text-[11px] text-emerald-200/80">Ganancia Media</div>
           </div>
+          <!-- Lock Button -->
+          <button onclick="lockDashboard()" title="Cerrar sesión / Bloquear dashboard" class="bg-white/10 hover:bg-white/20 active:scale-95 border border-white/20 rounded-2xl px-3 py-3 text-center shadow-sm transition flex flex-col items-center justify-center text-white/80 hover:text-white cursor-pointer" type="button">
+            <i data-lucide="lock" class="w-4 h-4 text-emerald-200"></i>
+            <span class="text-[9px] uppercase font-bold tracking-wider mt-0.5">Salir</span>
+          </button>
         </div>
       </div>
 
@@ -903,7 +983,9 @@
     </div>
   </footer>
 
+  </div><!-- /#dashboard-app -->
+
   <!-- JAVASCRIPT LOGIC -->
-  <script src="app.js?v=20261120_v5"></script>
+  <script src="app.js?v=20261120_auth"></script>
 </body>
 </html>
