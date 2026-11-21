@@ -4917,5 +4917,189 @@
       "status": "Mejoró",
       "favorable": true
     }
-  ]
+  ],
+  "comparativa_detallada": {
+    "resumen_lineas": {
+      "linea_verde": {
+        "nombre": "Línea Verde",
+        "enfoque": "Biodiversidad terrestre, humedales costeros y protección de cielos oscuros",
+        "establecimientos": 7,
+        "evaluaciones_totales": 127,
+        "evaluaciones_estudiantes": 112,
+        "evaluaciones_docentes": 15,
+        "instrumento_reactivos": "5 preguntas cerradas de opción múltiple (Escala 0 a 5 pts)",
+        "pre_promedio_pct": 65.5,
+        "post_promedio_pct": 74.2,
+        "delta_promedio_pct": 8.7,
+        "tasa_favorable": 79.5,
+        "hake_g": 0.252,
+        "color": "#059669"
+      },
+      "linea_azul": {
+        "nombre": "Línea Azul",
+        "enfoque": "Ecosistemas marinos, condrictios del litoral y mitigación de plásticos/colillas",
+        "establecimientos": 8,
+        "evaluaciones_totales": 132,
+        "evaluaciones_estudiantes": 132,
+        "evaluaciones_docentes": 0,
+        "instrumento_reactivos": "3 preguntas cerradas de opción múltiple (Escala 0 a 3 pts)",
+        "pre_promedio_pct": 50.0,
+        "post_promedio_pct": 73.7,
+        "delta_promedio_pct": 23.7,
+        "tasa_favorable": 91.7,
+        "hake_g": 0.474,
+        "color": "#0284c7"
+      }
+    },
+    "hito_3_comparativa": {
+      "titulo": "Hito 3: Biodiversidad y Ecosistemas Locales",
+      "verde": {
+        "nombre": "Hito 3 Verde: Humedales costeros y fauna nativa",
+        "n_pares": 66,
+        "pre_pct": 73.4,
+        "post_pct": 77.8,
+        "delta_pct": 4.4,
+        "hake_g": 0.167,
+        "tasa_favorable": 80.3,
+        "interpretacion": "Efecto techo moderado: los estudiantes llegaron con conocimiento previo sobre humedales y La Portada.",
+        "preguntas": [
+          {
+            "q": "Q1: Especies alrededor de Antofagasta",
+            "pre": 75.8,
+            "post": 77.3,
+            "delta": 1.5
+          },
+          {
+            "q": "Q2: Información real sobre La Portada",
+            "pre": 59.1,
+            "post": 63.6,
+            "delta": 4.5
+          },
+          {
+            "q": "Q3: Importancia de espacios naturales",
+            "pre": 86.4,
+            "post": 89.4,
+            "delta": 3.0
+          },
+          {
+            "q": "Q4: Desaparición de insectos en humedal",
+            "pre": 71.2,
+            "post": 84.8,
+            "delta": 13.6
+          },
+          {
+            "q": "Q5: Rol de especies descomponedoras",
+            "pre": 74.2,
+            "post": 74.2,
+            "delta": 0.0
+          }
+        ]
+      },
+      "azul": {
+        "nombre": "Hito 3 Azul (Challwa): Fauna marina y Corriente de Humboldt",
+        "n_pares": 67,
+        "pre_pct": 32.3,
+        "post_pct": 71.6,
+        "delta_pct": 39.3,
+        "hake_g": 0.581,
+        "tasa_favorable": 92.5,
+        "interpretacion": "Salto formativo extraordinario (Ganancia Media-Alta): el maritorio local era prácticamente desconocido al inicio.",
+        "preguntas": [
+          {
+            "q": "Q1: Corriente de Humboldt y nutrientes",
+            "pre": 56.7,
+            "post": 71.6,
+            "delta": 14.9
+          },
+          {
+            "q": "Q2: Tiburón tollo como especie local",
+            "pre": 17.9,
+            "post": 70.1,
+            "delta": 52.2
+          },
+          {
+            "q": "Q3: Sobrepesca y captura incidental",
+            "pre": 22.4,
+            "post": 73.1,
+            "delta": 50.7
+          }
+        ]
+      }
+    },
+    "hito_4_comparativa": {
+      "titulo": "Hito 4: Presiones Antropogénicas y Contaminación",
+      "verde": {
+        "nombre": "Hito 4 Verde: Atmósfera y contaminación lumínica",
+        "n_pares": 61,
+        "pre_pct": 56.4,
+        "post_pct": 70.2,
+        "delta_pct": 13.8,
+        "hake_g": 0.255,
+        "tasa_favorable": 78.7,
+        "interpretacion": "Apropiación de la luz como contaminante y la protección de cielos oscuros para astronomía y salud.",
+        "preguntas": [
+          {
+            "q": "Q1: Función de la atmósfera en el clima",
+            "pre": 60.7,
+            "post": 62.3,
+            "delta": 1.6
+          },
+          {
+            "q": "Q2: Efecto invernadero como problema",
+            "pre": 63.9,
+            "post": 63.9,
+            "delta": 0.0
+          },
+          {
+            "q": "Q3: Pérdida de oscuridad como alteración",
+            "pre": 57.4,
+            "post": 85.2,
+            "delta": 27.8
+          },
+          {
+            "q": "Q4: Impacto de luces apuntando al cielo",
+            "pre": 36.1,
+            "post": 62.3,
+            "delta": 26.2
+          },
+          {
+            "q": "Q5: Equilibrio lumínico y atmósfera",
+            "pre": 63.9,
+            "post": 77.0,
+            "delta": 13.1
+          }
+        ]
+      },
+      "azul": {
+        "nombre": "Hito 4 Azul (Desierto Azul): Basura marina y plásticos",
+        "n_pares": 65,
+        "pre_pct": 68.2,
+        "post_pct": 75.9,
+        "delta_pct": 7.7,
+        "hake_g": 0.242,
+        "tasa_favorable": 90.8,
+        "interpretacion": "Consolidación conceptual: pasaron de saber que la basura daña a identificar colillas y fuentes terrestres.",
+        "preguntas": [
+          {
+            "q": "Q1: Origen de la basura marina (tierra/pesca/ríos)",
+            "pre": 51.5,
+            "post": 61.5,
+            "delta": 10.0
+          },
+          {
+            "q": "Q2: Residuos críticos (plásticos/colillas/redes)",
+            "pre": 57.6,
+            "post": 73.8,
+            "delta": 16.2
+          },
+          {
+            "q": "Q3: Afectación a organismos marinos",
+            "pre": 93.9,
+            "post": 92.3,
+            "delta": -1.6
+          }
+        ]
+      }
+    }
+  }
 }

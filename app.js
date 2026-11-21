@@ -1,10 +1,13 @@
-// Programa Acción Climática 2026 - Dashboard Global Consolidado
+// Programa Acción Climática 2026 - Dashboard Global & Comparativo
 // Badijoly / Antigravity
 
 let rawData = null;
 let allEvaluaciones = [];
 let chartSchools = null;
 let chartGender = null;
+let chartCompHito3 = null;
+let chartCompHito4 = null;
+let currentTab = 'general';
 
 // DOM Elements
 const elFilterSchool = document.getElementById('filter-school');
@@ -13,6 +16,12 @@ const elFilterGender = document.getElementById('filter-gender');
 const elBtnReset = document.getElementById('btn-reset-filters');
 const elActiveCount = document.getElementById('lbl-active-count');
 const elSearchSchool = document.getElementById('input-search-school');
+
+// Tab Elements
+const elTabBtnGeneral = document.getElementById('tab-btn-general');
+const elTabBtnComparativa = document.getElementById('tab-btn-comparativa');
+const elViewGeneral = document.getElementById('view-general');
+const elViewComparativa = document.getElementById('view-comparativa');
 
 // KPI Elements
 const elKpiFavorablePct = document.getElementById('kpi-favorable-pct');
@@ -58,7 +67,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Populate School Dropdown
     populateSchoolDropdown();
 
-    // Event Listeners
+    // Event Listeners for Filters
     elFilterSchool.addEventListener('change', updateDashboard);
     elFilterRole.addEventListener('change', updateDashboard);
     elFilterGender.addEventListener('change', updateDashboard);
@@ -78,11 +87,32 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
+// TAB SWITCHING FUNCTION (GLOBAL)
+window.switchTab = function(tabName) {
+  currentTab = tabName;
+  if (tabName === 'general') {
+    elTabBtnGeneral.className = 'tab-active px-5 py-3 rounded-t-2xl text-sm font-bold transition flex items-center gap-2';
+    elTabBtnComparativa.className = 'tab-inactive px-5 py-3 rounded-t-2xl text-sm font-bold text-white/80 hover:text-white hover:bg-white/10 transition flex items-center gap-2';
+    elViewGeneral.classList.remove('hidden');
+    elViewComparativa.classList.add('hidden');
+    // resize charts
+    if (chartSchools) chartSchools.resize();
+    if (chartGender) chartGender.resize();
+  } else {
+    elTabBtnGeneral.className = 'tab-inactive px-5 py-3 rounded-t-2xl text-sm font-bold text-white/80 hover:text-white hover:bg-white/10 transition flex items-center gap-2';
+    elTabBtnComparativa.className = 'tab-active px-5 py-3 rounded-t-2xl text-sm font-bold transition flex items-center gap-2';
+    elViewGeneral.classList.add('hidden');
+    elViewComparativa.classList.remove('hidden');
+    renderComparativeCharts();
+  }
+  if (window.lucide) {
+    lucide.createIcons();
+  }
+};
+
 function populateSchoolDropdown() {
   const schools = rawData.metadata.establecimientos || [];
-  // Clear existing options except "Todos"
   elFilterSchool.innerHTML = '<option value="all">Todos los Establecimientos (15)</option>';
-  
   schools.forEach(sch => {
     const opt = document.createElement('option');
     opt.value = sch;
@@ -116,12 +146,10 @@ function updateDashboard() {
   const filtered = getFilteredData();
   const n = filtered.length;
 
-  // Active filter count
   elActiveCount.textContent = n;
   elPillTotalEvals.textContent = n;
 
   if (n === 0) {
-    // Zero state handling
     renderZeroState();
     return;
   }
@@ -137,8 +165,6 @@ function updateDashboard() {
   const preMean = preSum / n;
   const postMean = postSum / n;
   const deltaMean = postMean - preMean;
-  
-  // Hake Gain: g = (post% - pre%) / (100% - pre%)
   const hakeGlobal = preMean < 100 ? (postMean - preMean) / (100 - preMean) : 0;
 
   // Update KPI DOM
@@ -173,7 +199,11 @@ function updateDashboard() {
   // 3. Render Table
   renderSchoolsTable();
 
-  // Re-run Lucide icons
+  // If in comparative tab, refresh it too
+  if (currentTab === 'comparativa') {
+    renderComparativeCharts();
+  }
+
   if (window.lucide) {
     lucide.createIcons();
   }
@@ -195,7 +225,6 @@ function renderZeroState() {
 }
 
 function renderSchoolsChart(filtered) {
-  // Aggregate data by School
   const bySchool = {};
   filtered.forEach(e => {
     if (!bySchool[e.school]) {
@@ -221,13 +250,10 @@ function renderSchoolsChart(filtered) {
     };
   });
 
-  // Sort by postAvg descending
   schoolAgg.sort((a, b) => b.postAvg - a.postAvg);
-
   elSchoolsChartNote.textContent = `${schoolAgg.length} establecimientos graficados (${filtered.length} evaluaciones)`;
 
   const labels = schoolAgg.map(s => {
-    // Shorten long school names for chart readability
     let name = s.school
       .replace('Escuela ', 'Esc. ')
       .replace('Colegio ', 'Col. ')
@@ -258,7 +284,7 @@ function renderSchoolsChart(filtered) {
         {
           label: 'Estado Inicial PRE (%)',
           data: preData,
-          backgroundColor: 'rgba(148, 163, 184, 0.75)', // Slate 400
+          backgroundColor: 'rgba(148, 163, 184, 0.75)',
           borderColor: 'rgb(100, 116, 139)',
           borderWidth: 1,
           borderRadius: 6,
@@ -268,7 +294,7 @@ function renderSchoolsChart(filtered) {
         {
           label: 'Estado Final POST (%)',
           data: postData,
-          backgroundColor: 'rgba(13, 148, 136, 0.85)', // Teal 600
+          backgroundColor: 'rgba(13, 148, 136, 0.85)',
           borderColor: 'rgb(15, 118, 110)',
           borderWidth: 1,
           borderRadius: 6,
@@ -285,9 +311,7 @@ function renderSchoolsChart(filtered) {
         intersect: false
       },
       plugins: {
-        legend: {
-          display: false // Using custom header legend
-        },
+        legend: { display: false },
         tooltip: {
           backgroundColor: '#0f172a',
           titleFont: { size: 12, family: 'Plus Jakarta Sans', weight: 'bold' },
@@ -295,13 +319,9 @@ function renderSchoolsChart(filtered) {
           padding: 12,
           cornerRadius: 10,
           callbacks: {
-            title: (items) => {
-              const idx = items[0].dataIndex;
-              return schoolAgg[idx].school;
-            },
+            title: (items) => schoolAgg[items[0].dataIndex].school,
             afterBody: (items) => {
-              const idx = items[0].dataIndex;
-              const s = schoolAgg[idx];
+              const s = schoolAgg[items[0].dataIndex];
               const sign = s.delta >= 0 ? '+' : '';
               return [
                 `Línea: ${s.line}`,
@@ -333,9 +353,7 @@ function renderSchoolsChart(filtered) {
             font: { size: 10, family: 'Plus Jakarta Sans' },
             color: '#64748b'
           },
-          grid: {
-            color: '#f1f5f9'
-          }
+          grid: { color: '#f1f5f9' }
         }
       }
     }
@@ -343,7 +361,6 @@ function renderSchoolsChart(filtered) {
 }
 
 function renderGenderChart(filtered) {
-  // Group by Gender
   const femEvals = filtered.filter(e => e.gender === 'Femenino');
   const mascEvals = filtered.filter(e => e.gender === 'Masculino');
 
@@ -368,7 +385,6 @@ function renderGenderChart(filtered) {
   const statF = calcGenderStats(femEvals);
   const statM = calcGenderStats(mascEvals);
 
-  // Update Mini Cards
   elGenderFN.textContent = `N=${statF.n}`;
   elGenderFPre.textContent = `${statF.pre}%`;
   elGenderFPost.textContent = `${statF.post}%`;
@@ -383,7 +399,6 @@ function renderGenderChart(filtered) {
   elGenderMHake.textContent = statM.hake;
   elGenderMFav.textContent = `${statM.fav}%`;
 
-  // Render Bar Chart for Gender
   const ctx = document.getElementById('chart-gender-comparison').getContext('2d');
   if (chartGender) {
     chartGender.destroy();
@@ -418,31 +433,19 @@ function renderGenderChart(filtered) {
       plugins: {
         legend: {
           position: 'top',
-          labels: {
-            boxWidth: 12,
-            font: { size: 10, family: 'Plus Jakarta Sans' }
-          }
+          labels: { boxWidth: 12, font: { size: 10, family: 'Plus Jakarta Sans' } }
         },
         tooltip: {
-          callbacks: {
-            label: (item) => `${item.dataset.label}: ${item.raw}%`
-          }
+          callbacks: { label: (item) => `${item.dataset.label}: ${item.raw}%` }
         }
       },
       scales: {
-        x: {
-          grid: { display: false }
-        },
+        x: { grid: { display: false } },
         y: {
           min: 0,
           max: 100,
-          ticks: {
-            stepSize: 20,
-            callback: (v) => `${v}%`
-          },
-          grid: {
-            color: '#f1f5f9'
-          }
+          ticks: { stepSize: 20, callback: (v) => `${v}%` },
+          grid: { color: '#f1f5f9' }
         }
       }
     }
@@ -453,15 +456,10 @@ function renderSchoolsTable() {
   const filtered = getFilteredData();
   const searchTerm = (elSearchSchool.value || '').toLowerCase().trim();
 
-  // Aggregate by school
   const bySchool = {};
   filtered.forEach(e => {
     if (!bySchool[e.school]) {
-      bySchool[e.school] = {
-        name: e.school,
-        line: e.line,
-        evals: []
-      };
+      bySchool[e.school] = { name: e.school, line: e.line, evals: [] };
     }
     bySchool[e.school].evals.push(e);
   });
@@ -489,12 +487,9 @@ function renderSchoolsTable() {
     };
   });
 
-  // Filter by search
   if (searchTerm) {
     schoolsList = schoolsList.filter(s => s.name.toLowerCase().includes(searchTerm));
   }
-
-  // Sort by post descending
   schoolsList.sort((a, b) => b.post - a.post);
 
   if (schoolsList.length === 0) {
@@ -539,4 +534,134 @@ function renderSchoolsTable() {
       </tr>
     `;
   }).join('');
+}
+
+// -----------------------------------------------------------------
+// COMPARATIVE TAB RENDERING (HITO 3 & HITO 4 DEEP DIVE)
+// -----------------------------------------------------------------
+function renderComparativeCharts() {
+  if (!rawData || !rawData.comparativa_detallada) return;
+
+  const h3 = rawData.comparativa_detallada.hito_3_comparativa;
+  const h4 = rawData.comparativa_detallada.hito_4_comparativa;
+
+  // Chart Hito 3
+  const ctx3 = document.getElementById('chart-comp-hito3').getContext('2d');
+  if (chartCompHito3) chartCompHito3.destroy();
+
+  chartCompHito3 = new Chart(ctx3, {
+    type: 'bar',
+    data: {
+      labels: ['Línea Verde (Hito 3)', 'Línea Azul (Challwa)'],
+      datasets: [
+        {
+          label: 'Línea Base PRE (%)',
+          data: [h3.verde.pre_pct, h3.azul.pre_pct],
+          backgroundColor: 'rgba(148, 163, 184, 0.75)',
+          borderColor: 'rgb(100, 116, 139)',
+          borderWidth: 1,
+          borderRadius: 6,
+          barPercentage: 0.6
+        },
+        {
+          label: 'Nivel Logrado POST (%)',
+          data: [h3.verde.post_pct, h3.azul.post_pct],
+          backgroundColor: ['rgba(5, 150, 105, 0.85)', 'rgba(2, 132, 199, 0.85)'],
+          borderColor: ['rgb(4, 120, 87)', 'rgb(3, 105, 161)'],
+          borderWidth: 1,
+          borderRadius: 6,
+          barPercentage: 0.6
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { boxWidth: 12, font: { size: 10 } } },
+        tooltip: {
+          callbacks: {
+            afterBody: (items) => {
+              const idx = items[0].dataIndex;
+              if (idx === 0) {
+                return [`Δ Avance: +${h3.verde.delta_pct}%`, `Ganancia Hake (g): ${h3.verde.hake_g}`, `Muestra: N=${h3.verde.n_pares} pares`];
+              } else {
+                return [`Δ Avance: +${h3.azul.delta_pct}%`, `Ganancia Hake (g): ${h3.azul.hake_g}`, `Muestra: N=${h3.azul.n_pares} pares`];
+              }
+            },
+            label: (item) => `${item.dataset.label}: ${item.raw}%`
+          }
+        }
+      },
+      scales: {
+        y: {
+          min: 0,
+          max: 100,
+          ticks: { stepSize: 20, callback: (v) => `${v}%` },
+          grid: { color: '#f1f5f9' }
+        },
+        x: { grid: { display: false } }
+      }
+    }
+  });
+
+  // Chart Hito 4
+  const ctx4 = document.getElementById('chart-comp-hito4').getContext('2d');
+  if (chartCompHito4) chartCompHito4.destroy();
+
+  chartCompHito4 = new Chart(ctx4, {
+    type: 'bar',
+    data: {
+      labels: ['Línea Verde (Hito 4)', 'Línea Azul (Desierto Azul)'],
+      datasets: [
+        {
+          label: 'Línea Base PRE (%)',
+          data: [h4.verde.pre_pct, h4.azul.pre_pct],
+          backgroundColor: 'rgba(148, 163, 184, 0.75)',
+          borderColor: 'rgb(100, 116, 139)',
+          borderWidth: 1,
+          borderRadius: 6,
+          barPercentage: 0.6
+        },
+        {
+          label: 'Nivel Logrado POST (%)',
+          data: [h4.verde.post_pct, h4.azul.post_pct],
+          backgroundColor: ['rgba(5, 150, 105, 0.85)', 'rgba(2, 132, 199, 0.85)'],
+          borderColor: ['rgb(4, 120, 87)', 'rgb(3, 105, 161)'],
+          borderWidth: 1,
+          borderRadius: 6,
+          barPercentage: 0.6
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'top', labels: { boxWidth: 12, font: { size: 10 } } },
+        tooltip: {
+          callbacks: {
+            afterBody: (items) => {
+              const idx = items[0].dataIndex;
+              if (idx === 0) {
+                return [`Δ Avance: +${h4.verde.delta_pct}%`, `Ganancia Hake (g): ${h4.verde.hake_g}`, `Muestra: N=${h4.verde.n_pares} pares`];
+              } else {
+                return [`Δ Avance: +${h4.azul.delta_pct}%`, `Ganancia Hake (g): ${h4.azul.hake_g}`, `Muestra: N=${h4.azul.n_pares} pares`];
+              }
+            },
+            label: (item) => `${item.dataset.label}: ${item.raw}%`
+          }
+        }
+      },
+      scales: {
+        y: {
+          min: 0,
+          max: 100,
+          ticks: { stepSize: 20, callback: (v) => `${v}%` },
+          grid: { color: '#f1f5f9' }
+        },
+        x: { grid: { display: false } }
+      }
+    }
+  });
 }
