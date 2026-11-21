@@ -87,8 +87,8 @@
       <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
         <div>
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold tracking-wider uppercase text-emerald-200 mb-3">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
-            Consolidado Oficial de Impacto Pedagógico 2026
+            <i data-lucide="bar-chart-3" class="w-3.5 h-3.5"></i>
+            Consolidado de Impacto cuantitativo
           </div>
           <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white font-display">
             Programa Acción Climática
@@ -100,10 +100,10 @@
 
         <!-- Quick Summary Pill Badges -->
         <div class="flex flex-wrap sm:flex-nowrap gap-3 items-center">
-          <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 text-center min-w-[110px] shadow-sm">
-            <div class="text-xs uppercase font-medium text-emerald-200 tracking-wider">Muestra Total</div>
-            <div class="text-2xl font-bold font-display text-white" id="pill-total-evals">259</div>
-            <div class="text-[11px] text-emerald-200/80">Evals Pareadas</div>
+          <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 text-center min-w-[125px] shadow-sm">
+            <div class="text-xs uppercase font-medium text-emerald-200 tracking-wider" id="pill-label-students">Estudiantes</div>
+            <div class="text-2xl font-bold font-display text-white" id="pill-total-students">144</div>
+            <div class="text-[11px] text-emerald-200/80" id="pill-sub-students">Alumnos Evaluados</div>
           </div>
           <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl px-4 py-3 text-center min-w-[110px] shadow-sm">
             <div class="text-xs uppercase font-medium text-cyan-200 tracking-wider">Establecimientos</div>
@@ -202,6 +202,17 @@
 
     <!-- MAIN DASHBOARD GENERAL CONTENT -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 space-y-8 w-full">
+
+      <!-- NOTICE BOX: HOMOLOGACIÓN DE ESCALAS Y SCREENING RÁPIDO -->
+      <div class="p-4 sm:p-5 rounded-2xl bg-amber-50/90 border border-amber-200/80 text-amber-950 flex flex-col md:flex-row items-start md:items-center gap-4 shadow-xs">
+        <div class="p-2.5 rounded-xl bg-amber-100 text-amber-800 shrink-0">
+          <i data-lucide="alert-triangle" class="w-5 h-5"></i>
+        </div>
+        <div class="text-xs sm:text-[13px] leading-relaxed">
+          <span class="font-bold text-amber-900 block mb-0.5">Aviso Metodológico: Homologación de Escalas (Uso Exclusivo para Screening Rápido)</span>
+          Los resultados cuantitativos expuestos provienen de dos escalas de evaluación distintas: la <strong>Línea Verde consideró 5 preguntas cerradas</strong> (cada acierto representa un <strong>20.0%</strong> de logro), mientras que la <strong>Línea Azul consideró 3 preguntas cerradas</strong> (cada acierto representa un <strong>33.3%</strong> de logro). Ambas escalas se han equiparado porcentualmente (0.0% a 100.0%) con el exclusivo propósito de ofrecer una lectura global y un <em>screening rápido</em> de gestión. Esta equiparación no constituye una equivalencia directa de dificultad, ya que las líneas corresponden a <strong>distintos niveles taxonómicos</strong> (reconocimiento factual puntual en Línea Azul frente a comprensión ecológica compleja, análisis de redes tróficas y juicio evaluativo en Línea Verde).
+        </div>
+      </div>
 
       <!-- METRICS CARDS -->
       <section>
@@ -557,7 +568,7 @@
             Comparativa de Aprendizajes: Línea Verde vs. Línea Azul
           </h2>
           <p class="mt-1 text-sm text-slate-500 max-w-3xl">
-            Evaluación comparativa del impacto pedagógico en preguntas cerradas entre los componentes terrestre/cielos (Verde) y marino/residuos (Azul).
+            Screening comparativo de preguntas cerradas entre los componentes terrestre/cielos (Verde) y marino/residuos (Azul). Comparación instrumental bajo escalas y niveles taxonómicos diferenciados.
           </p>
         </div>
         

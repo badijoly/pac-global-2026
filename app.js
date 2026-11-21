@@ -53,7 +53,9 @@ const elGenderMFav = document.getElementById('gender-m-fav');
 
 const elTableBody = document.getElementById('table-schools-body');
 const elSchoolsChartNote = document.getElementById('lbl-schools-chart-note');
-const elPillTotalEvals = document.getElementById('pill-total-evals');
+const elPillTotalStudents = document.getElementById('pill-total-students');
+const elPillLabelStudents = document.getElementById('pill-label-students');
+const elPillSubStudents = document.getElementById('pill-sub-students');
 const elPillHakeG = document.getElementById('pill-hake-g');
 
 // Initialize Application
@@ -147,7 +149,22 @@ function updateDashboard() {
   const n = filtered.length;
 
   elActiveCount.textContent = n;
-  elPillTotalEvals.textContent = n;
+
+  // Actualizar conteo dinámico de estudiantes evaluados en la pastilla superior
+  const selectedRole = elFilterRole.value;
+  const estudiantesList = filtered.filter(e => (e.role || '').toLowerCase().includes('estudiante'));
+  const uniqueStudents = new Set(estudiantesList.map(e => (e.name || '').trim().toLowerCase())).size;
+  const uniqueTotal = new Set(filtered.map(e => (e.name || '').trim().toLowerCase())).size;
+
+  if (selectedRole === 'Docente') {
+    if (elPillLabelStudents) elPillLabelStudents.textContent = 'Docentes';
+    if (elPillTotalStudents) elPillTotalStudents.textContent = uniqueTotal;
+    if (elPillSubStudents) elPillSubStudents.textContent = 'Docentes Evaluados';
+  } else {
+    if (elPillLabelStudents) elPillLabelStudents.textContent = 'Estudiantes';
+    if (elPillTotalStudents) elPillTotalStudents.textContent = uniqueStudents;
+    if (elPillSubStudents) elPillSubStudents.textContent = 'Alumnos Evaluados';
+  }
 
   if (n === 0) {
     renderZeroState();
