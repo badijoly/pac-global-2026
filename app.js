@@ -597,15 +597,6 @@ function renderSchoolsTable() {
     const deltaClass = s.delta > 0 ? 'text-emerald-600 font-bold' : (s.delta === 0 ? 'text-slate-600' : 'text-amber-600 font-bold');
     const deltaSign = s.delta > 0 ? '+' : '';
 
-    let hakeBadge = '<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-purple-50 text-purple-700 border border-purple-200">Media</span>';
-    if (s.hake >= 0.7) {
-      hakeBadge = '<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">Alta</span>';
-    } else if (s.hake < 0.3 && s.hake >= 0) {
-      hakeBadge = '<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slate-100 text-slate-700 border border-slate-200">Baja</span>';
-    } else if (s.hake < 0) {
-      hakeBadge = '<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">Regresión</span>';
-    }
-
     const docBadge = s.nDoc > 0 
       ? `<span class="inline-flex items-center justify-center font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md text-[11px] border border-emerald-200">${s.nDoc}</span>`
       : `<span class="text-slate-300 font-mono">-</span>`;
@@ -627,8 +618,7 @@ function renderSchoolsTable() {
           </span>
         </td>
         <td class="py-3 px-3 text-center">
-          <span class="font-mono font-bold text-slate-800 mr-1.5">${s.hake}</span>
-          ${hakeBadge}
+          <span class="font-mono font-bold text-slate-800">${s.hake}</span>
         </td>
       </tr>
     `;
