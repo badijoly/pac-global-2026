@@ -54,14 +54,20 @@ const elGenderMFav = document.getElementById('gender-m-fav');
 const elTableBody = document.getElementById('table-schools-body');
 const elSchoolsChartNote = document.getElementById('lbl-schools-chart-note');
 const elPillTotalStudents = document.getElementById('pill-total-students');
+const elPillTotalEvals = document.getElementById('pill-total-evals');
 const elPillLabelStudents = document.getElementById('pill-label-students');
 const elPillSubStudents = document.getElementById('pill-sub-students');
 const elPillHakeG = document.getElementById('pill-hake-g');
 
+// Safe textContent setter to protect against missing/cached DOM nodes
+function safeSetText(el, val) {
+  if (el) el.textContent = val;
+}
+
 // Initialize Application
 document.addEventListener('DOMContentLoaded', async () => {
   try {
-    const response = await fetch('data.json');
+    const response = await fetch('data.json?v=' + Date.now());
     if (!response.ok) throw new Error('No se pudo cargar data.json');
     rawData = await response.json();
     allEvaluaciones = rawData.evaluaciones;
@@ -70,11 +76,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     populateSchoolDropdown();
 
     // Event Listeners for Filters
-    elFilterSchool.addEventListener('change', updateDashboard);
-    elFilterRole.addEventListener('change', updateDashboard);
-    elFilterGender.addEventListener('change', updateDashboard);
-    elBtnReset.addEventListener('click', resetFilters);
-    elSearchSchool.addEventListener('input', renderSchoolsTable);
+    if (elFilterSchool) elFilterSchool.addEventListener('change', updateDashboard);
+    if (elFilterRole) elFilterRole.addEventListener('change', updateDashboard);
+    if (elFilterGender) elFilterGender.addEventListener('change', updateDashboard);
+    if (elBtnReset) elBtnReset.addEventListener('click', resetFilters);
+    if (elSearchSchool) elSearchSchool.addEventListener('input', renderSchoolsTable);
 
     // Initial render
     updateDashboard();
@@ -148,22 +154,23 @@ function updateDashboard() {
   const filtered = getFilteredData();
   const n = filtered.length;
 
-  elActiveCount.textContent = n;
+  safeSetText(elActiveCount, n);
+  safeSetText(elPillTotalEvals, n);
 
   // Actualizar conteo dinámico de estudiantes evaluados en la pastilla superior
-  const selectedRole = elFilterRole.value;
+  const selectedRole = elFilterRole ? elFilterRole.value : 'all';
   const estudiantesList = filtered.filter(e => (e.role || '').toLowerCase().includes('estudiante'));
   const uniqueStudents = new Set(estudiantesList.map(e => (e.name || '').trim().toLowerCase())).size;
   const uniqueTotal = new Set(filtered.map(e => (e.name || '').trim().toLowerCase())).size;
 
   if (selectedRole === 'Docente') {
-    if (elPillLabelStudents) elPillLabelStudents.textContent = 'Docentes';
-    if (elPillTotalStudents) elPillTotalStudents.textContent = uniqueTotal;
-    if (elPillSubStudents) elPillSubStudents.textContent = 'Docentes Evaluados';
+    safeSetText(elPillLabelStudents, 'Docentes');
+    safeSetText(elPillTotalStudents, uniqueTotal);
+    safeSetText(elPillSubStudents, 'Docentes Evaluados');
   } else {
-    if (elPillLabelStudents) elPillLabelStudents.textContent = 'Estudiantes';
-    if (elPillTotalStudents) elPillTotalStudents.textContent = uniqueStudents;
-    if (elPillSubStudents) elPillSubStudents.textContent = 'Alumnos Evaluados';
+    safeSetText(elPillLabelStudents, 'Estudiantes');
+    safeSetText(elPillTotalStudents, uniqueStudents);
+    safeSetText(elPillSubStudents, 'Alumnos Evaluados');
   }
 
   if (n === 0) {
@@ -186,28 +193,28 @@ function updateDashboard() {
 
   // Update KPI DOM
   const favPct = ((favCount / n) * 100).toFixed(1);
-  elKpiFavorablePct.textContent = `${favPct}%`;
-  elKpiFavorableN.textContent = favCount;
-  elKpiFavorableTotal.textContent = n;
-  elKpiMejoraronN.textContent = mejoraronCount;
-  elKpiMantuvieronN.textContent = mantuvieronCount;
-  elKpiRetrocedieronN.textContent = retrocedieronCount;
+  safeSetText(elKpiFavorablePct, `${favPct}%`);
+  safeSetText(elKpiFavorableN, favCount);
+  safeSetText(elKpiFavorableTotal, n);
+  safeSetText(elKpiMejoraronN, mejoraronCount);
+  safeSetText(elKpiMantuvieronN, mantuvieronCount);
+  safeSetText(elKpiRetrocedieronN, retrocedieronCount);
 
-  elKpiPostPct.textContent = `${postMean.toFixed(1)}%`;
-  elKpiPrePct.textContent = `${preMean.toFixed(1)}%`;
+  safeSetText(elKpiPostPct, `${postMean.toFixed(1)}%`);
+  safeSetText(elKpiPrePct, `${preMean.toFixed(1)}%`);
 
   const sign = deltaMean >= 0 ? '+' : '';
-  elKpiDeltaPct.textContent = `${sign}${deltaMean.toFixed(1)}%`;
+  safeSetText(elKpiDeltaPct, `${sign}${deltaMean.toFixed(1)}%`);
 
   const hakeFormatted = hakeGlobal.toFixed(2);
-  elKpiHakeG.textContent = hakeFormatted;
-  elPillHakeG.textContent = hakeFormatted;
+  safeSetText(elKpiHakeG, hakeFormatted);
+  safeSetText(elPillHakeG, hakeFormatted);
 
   let tier = 'Ganancia Baja';
   if (hakeGlobal >= 0.70) tier = 'Ganancia Alta (≥0.70)';
   else if (hakeGlobal >= 0.30) tier = 'Ganancia Media (0.30-0.69)';
   else if (hakeGlobal < 0) tier = 'Regresión (<0)';
-  elKpiHakeTier.textContent = tier;
+  safeSetText(elKpiHakeTier, tier);
 
   // 2. Render Charts
   renderSchoolsChart(filtered);
@@ -227,15 +234,15 @@ function updateDashboard() {
 }
 
 function renderZeroState() {
-  elKpiFavorablePct.textContent = '0%';
-  elKpiFavorableN.textContent = 0;
-  elKpiFavorableTotal.textContent = 0;
-  elKpiPostPct.textContent = '0%';
-  elKpiPrePct.textContent = '0%';
-  elKpiDeltaPct.textContent = '0%';
-  elKpiHakeG.textContent = '0.00';
-  elKpiHakeTier.textContent = 'Sin Datos';
-  elTableBody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-400">No se encontraron evaluaciones con los filtros seleccionados.</td></tr>`;
+  safeSetText(elKpiFavorablePct, '0%');
+  safeSetText(elKpiFavorableN, 0);
+  safeSetText(elKpiFavorableTotal, 0);
+  safeSetText(elKpiPostPct, '0%');
+  safeSetText(elKpiPrePct, '0%');
+  safeSetText(elKpiDeltaPct, '0%');
+  safeSetText(elKpiHakeG, '0.00');
+  safeSetText(elKpiHakeTier, 'Sin Datos');
+  if (elTableBody) elTableBody.innerHTML = `<tr><td colspan="8" class="text-center py-8 text-slate-400">No se encontraron evaluaciones con los filtros seleccionados.</td></tr>`;
   
   if (chartSchools) chartSchools.destroy();
   if (chartGender) chartGender.destroy();
@@ -268,7 +275,7 @@ function renderSchoolsChart(filtered) {
   });
 
   schoolAgg.sort((a, b) => b.postAvg - a.postAvg);
-  elSchoolsChartNote.textContent = `${schoolAgg.length} establecimientos graficados (${filtered.length} evaluaciones)`;
+  safeSetText(elSchoolsChartNote, `${schoolAgg.length} establecimientos graficados (${filtered.length} evaluaciones)`);
 
   const labels = schoolAgg.map(s => {
     let name = s.school
@@ -402,19 +409,19 @@ function renderGenderChart(filtered) {
   const statF = calcGenderStats(femEvals);
   const statM = calcGenderStats(mascEvals);
 
-  elGenderFN.textContent = `N=${statF.n}`;
-  elGenderFPre.textContent = `${statF.pre}%`;
-  elGenderFPost.textContent = `${statF.post}%`;
-  elGenderFDelta.textContent = `${statF.delta >= 0 ? '+' : ''}${statF.delta}%`;
-  elGenderFHake.textContent = statF.hake;
-  elGenderFFav.textContent = `${statF.fav}%`;
+  safeSetText(elGenderFN, `N=${statF.n}`);
+  safeSetText(elGenderFPre, `${statF.pre}%`);
+  safeSetText(elGenderFPost, `${statF.post}%`);
+  safeSetText(elGenderFDelta, `${statF.delta >= 0 ? '+' : ''}${statF.delta}%`);
+  safeSetText(elGenderFHake, statF.hake);
+  safeSetText(elGenderFFav, `${statF.fav}%`);
 
-  elGenderMN.textContent = `N=${statM.n}`;
-  elGenderMPre.textContent = `${statM.pre}%`;
-  elGenderMPost.textContent = `${statM.post}%`;
-  elGenderMDelta.textContent = `${statM.delta >= 0 ? '+' : ''}${statM.delta}%`;
-  elGenderMHake.textContent = statM.hake;
-  elGenderMFav.textContent = `${statM.fav}%`;
+  safeSetText(elGenderMN, `N=${statM.n}`);
+  safeSetText(elGenderMPre, `${statM.pre}%`);
+  safeSetText(elGenderMPost, `${statM.post}%`);
+  safeSetText(elGenderMDelta, `${statM.delta >= 0 ? '+' : ''}${statM.delta}%`);
+  safeSetText(elGenderMHake, statM.hake);
+  safeSetText(elGenderMFav, `${statM.fav}%`);
 
   const ctx = document.getElementById('chart-gender-comparison').getContext('2d');
   if (chartGender) {
