@@ -533,8 +533,10 @@
             <thead class="bg-slate-50 text-slate-600 font-bold uppercase tracking-wider">
               <tr>
                 <th scope="col" class="py-3 px-4">Establecimiento</th>
-                <th scope="col" class="py-3 px-3">Línea</th>
-                <th scope="col" class="py-3 px-3 text-center">N° Evals</th>
+                <th scope="col" class="py-3 px-2">Línea</th>
+                <th scope="col" class="py-3 px-2 text-center text-blue-700 bg-blue-50/50" title="Evaluaciones pareadas de estudiantes en ambos hitos">Evals Estudiantes</th>
+                <th scope="col" class="py-3 px-2 text-center text-emerald-700 bg-emerald-50/50" title="Evaluaciones pareadas de profesores líderes">Evals Líderes</th>
+                <th scope="col" class="py-3 px-2 text-center text-slate-900 bg-slate-100 font-black" title="Sumatoria total de evaluaciones pareadas">Total Evals</th>
                 <th scope="col" class="py-3 px-3 text-right">PRE (%)</th>
                 <th scope="col" class="py-3 px-3 text-right">POST (%)</th>
                 <th scope="col" class="py-3 px-3 text-right">Δ Avance</th>
@@ -545,6 +547,40 @@
             <tbody id="table-schools-body" class="divide-y divide-slate-100 bg-white">
             </tbody>
           </table>
+        </div>
+
+        <!-- NOTAS ACLARATORIAS AL PIE DE LA TABLA -->
+        <div class="mt-6 pt-5 border-t border-slate-200 space-y-3 bg-slate-50/70 p-4 sm:p-5 rounded-2xl border border-slate-200 text-xs text-slate-600 leading-relaxed">
+          <div class="flex items-center gap-2 font-bold text-slate-800 text-sm">
+            <i data-lucide="info" class="w-4 h-4 text-teal-600"></i>
+            Notas Aclaratorias sobre las Evaluaciones por Establecimiento
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-2">
+            <!-- Nota 1: La Bandera y N° Acumulado -->
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
+              <span class="font-bold text-slate-900 block mb-1">1. ¿Por qué hay 23 evaluaciones en Escuela La Bandera?</span>
+              <p class="text-[11.5px] text-slate-600">
+                El programa evaluó <strong>dos hitos formativos</strong> (Hito 3 y Hito 4). Cada participante genera hasta 2 evaluaciones pareadas (PRE y POST por hito). En La Bandera se contabilizan <strong>19 evaluaciones de estudiantes</strong> (10 en Hito 3 y 9 en Hito 4, correspondientes a 12 alumnos únicos por rotación o justificación de asistencia) más <strong>4 evaluaciones de docentes líderes</strong> (2 profesoras evaluadas en ambos hitos), sumando <strong>23 evaluaciones pareadas</strong> en total.
+              </p>
+            </div>
+
+            <!-- Nota 2: Evaluación de Profesores Líderes -->
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
+              <span class="font-bold text-slate-900 block mb-1">2. Evaluaciones de Profesores Líderes</span>
+              <p class="text-[11.5px] text-slate-600">
+                En la <strong>Línea Verde</strong>, los profesores líderes de equipo también completaron los instrumentos formativos en terreno (sumando 15 evaluaciones docentes en total). En la <strong>Línea Azul</strong>, los instrumentos de preguntas cerradas se aplicaron exclusivamente a los estudiantes (132 evaluaciones).
+              </p>
+            </div>
+
+            <!-- Nota 3: Tamaño de Equipos Escolares -->
+            <div class="bg-white p-3.5 rounded-xl border border-slate-200 shadow-2xs">
+              <span class="font-bold text-slate-900 block mb-1">3. Asistencia y Tamaño de Equipos</span>
+              <p class="text-[11.5px] text-slate-600">
+                El tamaño estándar es de hasta 10 estudiantes por equipo escolar. Las cifras totales reflejan la asistencia acumulada a ambos hitos. Por ejemplo, en Escuela Padre Hurtado asistieron 6 alumnos a ambos hitos (6 × 2 = 12 evals), mientras que en Colegio Bet-el se evaluaron 8 estudiantes y 1 docente (9 evals).
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -868,6 +904,6 @@
   </footer>
 
   <!-- JAVASCRIPT LOGIC -->
-  <script src="app.js?v=20261120_v4"></script>
+  <script src="app.js?v=20261120_v5"></script>
 </body>
 </html>

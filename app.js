@@ -490,6 +490,11 @@ function renderSchoolsTable() {
 
   let schoolsList = Object.values(bySchool).map(s => {
     const n = s.evals.length;
+    const estEvals = s.evals.filter(e => (e.role || '').toLowerCase().includes('estudiante'));
+    const docEvals = s.evals.filter(e => (e.role || '').toLowerCase().includes('docente') || (e.role || '').toLowerCase().includes('profesor') || (e.role || '').toLowerCase().includes('lider'));
+    const nEst = estEvals.length;
+    const nDoc = docEvals.length;
+
     const preSum = s.evals.reduce((a, b) => a + b.pre_pct, 0);
     const postSum = s.evals.reduce((a, b) => a + b.post_pct, 0);
     const pre = preSum / n;
@@ -503,6 +508,8 @@ function renderSchoolsTable() {
       name: s.name,
       line: s.line,
       n,
+      nEst,
+      nDoc,
       pre: Number(pre.toFixed(1)),
       post: Number(post.toFixed(1)),
       delta: Number(delta.toFixed(1)),
@@ -517,7 +524,7 @@ function renderSchoolsTable() {
   schoolsList.sort((a, b) => b.post - a.post);
 
   if (schoolsList.length === 0) {
-    elTableBody.innerHTML = `<tr><td colspan="8" class="text-center py-6 text-slate-400">No se encontraron establecimientos coincidentes.</td></tr>`;
+    elTableBody.innerHTML = `<tr><td colspan="10" class="text-center py-6 text-slate-400">No se encontraron establecimientos coincidentes.</td></tr>`;
     return;
   }
 
@@ -538,11 +545,19 @@ function renderSchoolsTable() {
       hakeBadge = '<span class="px-2 py-0.5 rounded-md text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">Regresión</span>';
     }
 
+    const docBadge = s.nDoc > 0 
+      ? `<span class="inline-flex items-center justify-center font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md text-[11px] border border-emerald-200">${s.nDoc}</span>`
+      : `<span class="text-slate-300 font-mono">-</span>`;
+
+    const noteTag = s.name === 'Escuela La Bandera' ? '<sup class="text-teal-600 font-bold ml-1 cursor-help" title="Ver Nota 1 al pie: 19 evaluaciones de estudiantes + 4 de líderes docentes en 2 hitos">*1</sup>' : '';
+
     return `
       <tr class="hover:bg-slate-50 transition">
-        <td class="py-3 px-4 font-semibold text-slate-900">${s.name}</td>
-        <td class="py-3 px-3">${lineBadge}</td>
-        <td class="py-3 px-3 text-center font-medium text-slate-600">${s.n}</td>
+        <td class="py-3 px-4 font-semibold text-slate-900">${s.name}${noteTag}</td>
+        <td class="py-3 px-2">${lineBadge}</td>
+        <td class="py-3 px-2 text-center font-medium text-slate-700 bg-slate-50/40">${s.nEst}</td>
+        <td class="py-3 px-2 text-center bg-slate-50/40">${docBadge}</td>
+        <td class="py-3 px-2 text-center font-black text-slate-900 bg-slate-100/70 font-mono">${s.n}</td>
         <td class="py-3 px-3 text-right font-mono text-slate-600">${s.pre}%</td>
         <td class="py-3 px-3 text-right font-mono font-bold text-slate-900">${s.post}%</td>
         <td class="py-3 px-3 text-right font-mono ${deltaClass}">${deltaSign}${s.delta}%</td>
