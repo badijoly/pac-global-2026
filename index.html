@@ -650,6 +650,58 @@
       </div>
     </div>
 
+    <!-- METODOLOGIA Y ANALISIS TAXONOMICO CARD -->
+    <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
+      <div class="flex items-center gap-3 mb-6 pb-4 border-b border-slate-100">
+        <div class="w-10 h-10 rounded-2xl bg-teal-50 border border-teal-200 text-teal-700 flex items-center justify-center font-bold">
+          <i data-lucide="scale" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Fundamentación Psicométrica y Curricular</span>
+          <h3 class="text-lg sm:text-xl font-bold font-display text-slate-900">
+            Estandarización de Escalas y Análisis Taxonómico de Reactivos
+          </h3>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 text-xs text-slate-600 leading-relaxed">
+        <!-- Col 1: Estandarización de Escalas -->
+        <div class="space-y-3.5 bg-slate-50/70 p-5 rounded-2xl border border-slate-200/80">
+          <div class="flex items-center gap-2 text-slate-900 font-bold text-sm">
+            <i data-lucide="sliders" class="w-4 h-4 text-teal-600"></i>
+            1. Homologación de Escalas Dispares (3 vs. 5 Preguntas)
+          </div>
+          <p>
+            Para permitir la trazabilidad entre instrumentos de distinta longitud, los puntajes directos se transformaron en un <strong>Porcentaje de Logro Académico (0.0% a 100.0%)</strong>:
+          </p>
+          <div class="p-3 bg-white rounded-xl border border-slate-200 font-mono text-[11px] text-slate-800 text-center">
+            Logro (%) = (Aciertos / N_preguntas) × 100%
+          </div>
+          <ul class="space-y-2 list-disc pl-4 text-[11.5px]">
+            <li><strong>Línea Verde (5 preguntas):</strong> Cada reactivo equivale al <strong>20.0%</strong> de la puntuación total. Ofrece una resolución más fina y amortigua el impacto de errores accidentales aislados.</li>
+            <li><strong>Línea Azul (3 preguntas):</strong> Cada reactivo equivale al <strong>33.3%</strong>. La escala discreta posee menor granularidad, provocando saltos cuantitativos más pronunciados ante la variación de una sola respuesta.</li>
+            <li><strong>Invarianza mediante Ganancia de Hake (g):</strong> Dado que la Línea Verde partió de un nivel basal más elevado (65.5% vs. 50.0%), la ganancia de Hake normaliza el aprendizaje calculando la proporción de la brecha formativa disponible que fue efectivamente superada, eliminando el sesgo de escala.</li>
+          </ul>
+        </div>
+
+        <!-- Col 2: Comparativa Taxonómica -->
+        <div class="space-y-3.5 bg-slate-50/70 p-5 rounded-2xl border border-slate-200/80">
+          <div class="flex items-center gap-2 text-slate-900 font-bold text-sm">
+            <i data-lucide="brain" class="w-4 h-4 text-indigo-600"></i>
+            2. Nivel Taxonómico y Profundidad Cognitiva (Bloom / Webb)
+          </div>
+          <p>
+            El análisis curricular revela que las preguntas cerradas de ambas líneas miden procesos cognitivos diferenciados:
+          </p>
+          <ul class="space-y-2 list-disc pl-4 text-[11.5px]">
+            <li><strong>Línea Azul (Foco en Recordar y Comprender - DOK 1 y 2):</strong> En Challwa (Hito 3), la mayor variación (+52.2%) correspondió al reconocimiento taxonómico factual del <em>Tiburón tollo</em> como especie nativa (DOK 1). En Desierto Azul (Hito 4), las preguntas emplean distractores estándar y opciones sintéticas inclusivas («Todas las anteriores»).</li>
+            <li><strong>Línea Verde (Foco en Analizar y Evaluar - DOK 2 y 3):</strong> Los reactivos evalúan interdependencia ecológica (p. ej., consecuencias sistémicas de la pérdida de insectos en humedales - Bloom Análisis) y dilemas sociotécnicos de mitigación lumínica (Bloom Evaluar).</li>
+            <li><strong>Conclusión comparativa:</strong> El incremento porcentual superior observado en Línea Azul (+23.7% vs. +8.7%) responde a la convergencia de una línea base inicial deprimida, un nivel taxonómico declarativo puntual y una escala de 3 ítems, más que a una asimetría en la calidad formativa. En problemáticas ambientales convergentes (Hito 4), ambas líneas logran una ganancia de Hake equivalente (g ≈ 0.25).</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
     <!-- HITO 3 COMPARATIVE DEEP DIVE -->
     <div class="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-sm">
       <div class="flex items-center justify-between mb-6">
@@ -699,18 +751,18 @@
                 <span>Hake g = 0.58</span>
               </div>
               <p class="mt-2 text-[11px] text-slate-600 leading-snug">
-                Salto formativo extraordinario: desconocimiento inicial del maritorio transformado en apropiación científica.
+                Apropiación de contenidos específicos: el bajo nivel basal inicial en fauna marina permitió un amplio margen de avance.
               </p>
             </div>
           </div>
 
           <!-- Highlight Leap Box -->
-          <div class="p-4 rounded-2xl bg-amber-50 border border-amber-200 flex items-start gap-3">
-            <div class="p-2 rounded-xl bg-amber-100 text-amber-800">
-              <i data-lucide="zap" class="w-4 h-4"></i>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-start gap-3">
+            <div class="p-2 rounded-xl bg-teal-50 text-teal-700">
+              <i data-lucide="info" class="w-4 h-4"></i>
             </div>
-            <div class="text-xs text-amber-950">
-              <strong class="font-bold">Mayor Salto Conceptual del Programa:</strong> En Challwa, el reconocimiento del <em>Tiburón tollo</em> como especie nativa de Antofagasta aumentó de un <strong>17.9% en el PRE</strong> a un <strong>70.1% en el POST</strong> (+52.2 puntos porcentuales de crecimiento neto).
+            <div class="text-xs text-slate-700">
+              <strong class="font-bold text-slate-900">Mayor Variación Neta en Preguntas Cerradas:</strong> En Challwa, el reactivo factual de identificación del <em>Tiburón tollo</em> como especie nativa pasó de un <strong>17.9% en el PRE</strong> a un <strong>70.1% en el POST</strong> (+52.2 puntos porcentuales de incremento neto).
             </div>
           </div>
         </div>
